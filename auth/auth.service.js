@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken')
 
 var UserModel = require("../api/user/user.model");
 const userSessionModel = require('../api/userSession/userSession.model');
+const { awsHelperfunction } = require('../helpers/aws.helper');
 
 
 function isAdmin() {
@@ -109,6 +110,27 @@ function isUserAuthenticated() {
       });
 }
 
+async function initiateAuth(args,res){
+
+    try{
+            const _args = { 
+            AuthFlow: args.AuthFlow,
+            AuthParameters: args.AuthParameters,
+            ClientId: process.env.ClientId // required
+        };
+      
+        return await awsHelperfunction(
+            _args,
+            args.client,
+            "InitiateAuthCommand"
+        )
+    }catch(e){
+       
+        res.status(500).send({success: false, error: e.message})
+    }
+}
+
+exports.initiateAuth = initiateAuth
 exports.isAdmin = isAdmin;
 
 exports.isAuthenticated = isAuthenticated;

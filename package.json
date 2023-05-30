@@ -9,7 +9,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@aws-sdk/client-cognito-identity-provider": "^3.338.0",
+    "@aws-sdk/client-s3": "^3.338.0",
+    "amazon-cognito-identity-js": "^6.2.0",
     "body-parser": "^1.19.0",
+    "busboy-body-parser": "^0.3.2",
     "composable-middleware": "^0.3.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",

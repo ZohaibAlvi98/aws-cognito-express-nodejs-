@@ -3,9 +3,7 @@ const dotenv = require('dotenv').config()
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-// const passport = require('passport');
-const session = require('express-session');
-// const busboyBodyParser = require('busboy-body-parser');
+const busboyBodyParser = require('busboy-body-parser');
 const path = require('path');
 const app = express();
 // var compression = require('compression');
@@ -14,16 +12,14 @@ var cors = require('cors');
 const PORT = process.env.PORT;
 
 global.ROOTPATH = __dirname;
-// const _ = require('lodash');
 const moment = require('moment');
- 
-// app.use('/auth', require('./auth'))
+
 
 app.locals.moment = require('moment');
 
-app.use(bodyParser.json())
-app.use(express.urlencoded({ extended: false }));
-
+app.use(express.urlencoded({extended: true})); 
+app.use(express.json());       
+app.use(busboyBodyParser());
 
 app.get('/dist-user-images/:filename', function(req, res) {
   var filename = req.params.filename.replace(/'/g, '');
@@ -61,10 +57,10 @@ app.use(function(req, res, next) {
 });
 
 // app.use(compression());
-// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-require('./dbconfig')(app);
+require('./db.config')(app);
 require('./routes')(app);
+require('./aws.config')(app)
 
 app.listen(PORT, function() {
   console.log('Server listening on PORT : ' + PORT);
