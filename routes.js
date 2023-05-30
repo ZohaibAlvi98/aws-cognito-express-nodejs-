@@ -4,7 +4,6 @@
 var path = require('path');
 
 module.exports = function(app){
-
     // ANALYTICS USAGE
 
     app.use('/api/user', require('./api/user'));

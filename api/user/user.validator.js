@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const { validateRequest } = require('../../utils/validator.helper');
+const { validateRequest } = require('../../helpers/validator.helper');
 
 exports.createUser = async function createUser(req, res, next) {
     const schema = Joi.object({
@@ -11,6 +11,33 @@ exports.createUser = async function createUser(req, res, next) {
     validateRequest(req, next, schema,res);
 }
 
+exports.confirmSignUpCode = async function confirmSignUpCode(req, res, next) {
+    const schema = Joi.object({
+        username: Joi.string().required(),
+        code: Joi.string().required()
+    });
+    validateRequest(req, next, schema,res);
+}
+
+exports.resendConfirmationCode = async function resendConfirmationCode(req, res, next) {
+    const schema = Joi.object({
+        username: Joi.string().required()
+    });
+    validateRequest(req, next, schema,res);
+}
+
+exports.confirmPasswordCode = async function confirmPasswordCode(req, res, next) {
+    const schema = Joi.object({
+        username: Joi.string().required(),
+        code: Joi.string().required(),
+        password: Joi.string().required()
+
+    });
+    validateRequest(req, next, schema,res);
+}
+
+
+
 exports.loginUser = async function loginUser(req, res, next) {
     const schema = Joi.object({
         username: Joi.string().required(),
@@ -18,6 +45,18 @@ exports.loginUser = async function loginUser(req, res, next) {
     });
     validateRequest(req, next, schema,res);
 }
+
+exports.changePassword = async function changePassword(req, res, next) {
+    const schema = Joi.object({
+        previousPassword: Joi.string().required(),
+        newPassword: Joi.string().min(6).required()
+
+    });
+    validateRequest(req, next, schema,res);
+}
+
+
+
 
 exports.signupOtp = async function signupOtp(req, res, next) {
     const schema = Joi.object({
@@ -41,13 +80,6 @@ exports.update = async function update(req, res, next) {
         email: Joi.string(),
         age: Joi.string(),
         fullname: Joi.string()
-    });
-    validateRequest(req, next, schema,res);
-}
-
-exports.changePassword = async function changePassword(req, res, next) {
-    const schema = Joi.object({
-        password: Joi.string().min(6).required()
     });
     validateRequest(req, next, schema,res);
 }

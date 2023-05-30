@@ -3,9 +3,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-// const passport = require('passport');
 const session = require('express-session');
-// const busboyBodyParser = require('busboy-body-parser');
+
 
 const path = require('path');
 
@@ -48,7 +47,5 @@ module.exports = function(app){
 	app.use(bodyParser.json({ 
 		limit: '50mb'
 	}));
-	
-	//   app.use(busboyBodyParser());
 	
 	}

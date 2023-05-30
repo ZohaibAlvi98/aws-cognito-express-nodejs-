@@ -24,13 +24,9 @@ let UserSchema = new Schema({
     },
     socialId: String,
     socialType: String,
+    gender: String,
     age: Number,
-    resetToken:String,
-    salt:String,
     role: String,
-    hashedPassword: String,
-    signupOtp: String,
-    otpVerification: String,
     createdt:{
         type:Date,
         default: Date.now
@@ -103,15 +99,15 @@ UserSchema
     }, 'Email cannot be blank');
 
 // Validate empty password
-UserSchema
-    .path('hashedPassword')
-    .validate(function(hashedPassword) {
-        if (socialTypes.indexOf(this.socialType) !== -1) return true;
-        // if (this._password) {
-        //     var regex = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&^()-_+={}~|])[A-Za-z\d$@$!%*#?&^()-_+={}~|]{8,}$/);
-        //     return regex.test(this._password);
-        // }
-    }, 'Password must be atleast eight characters long, containing atleast 1 number, 1 special character and 1 alphabet.');
+// UserSchema
+//     .path('hashedPassword')
+//     .validate(function(hashedPassword) {
+//         if (socialTypes.indexOf(this.socialType) !== -1) return true;
+//         // if (this._password) {
+//         //     var regex = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&^()-_+={}~|])[A-Za-z\d$@$!%*#?&^()-_+={}~|]{8,}$/);
+//         //     return regex.test(this._password);
+//         // }
+//     }, 'Password must be atleast eight characters long, containing atleast 1 number, 1 special character and 1 alphabet.');
 
 // // Validate email is not taken
 // UserSchema
