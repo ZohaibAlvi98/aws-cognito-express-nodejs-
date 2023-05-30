@@ -26,26 +26,4 @@ router.get('/details', controller.userDetails);
 router.post('/change/password',changePassword, controller.changePassword);
 
 
-
-
-
-router.post('/login',loginUser, controller.login);
-
-router.post('/signup/otp',signupOtp, controller.verifySignupOtp);
-
-router.post('/social/login',socialLogin, controller.socialLogin);
-
-
-
-
-router.get('/users',auth.isAdmin(), controller.users);
-
-router.post('/generate/email',generateEmail, controller.generateEmail);
-
-router.post('/check/otp', checkReset ,controller.checkToken);
-
-router.post('/reset/password', resetPassword ,controller.resetPassword);
-
-
-
 module.exports = router;
