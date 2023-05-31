@@ -1,13 +1,15 @@
 'use strict';
 
-var express = require('express');
-var controller = require('./user.controller');
-var auth = require('../../auth/auth.service');
+const express = require('express');
+const controller = require('./user.controller');
+const auth = require('../../auth/auth.service');
 const { createUser,confirmSignUpCode,resendConfirmationCode,confirmPasswordCode,loginUser,signupOtp,socialLogin, update,changePassword, resetPassword, checkReset,generateEmail} = require('./user.validator');
 
-var router = express.Router();
+const router = express.Router();
 
 router.post('/register',createUser, controller.create);
+
+router.post('/login',loginUser, controller.login);
 
 router.post('/confirmation/code/signup',confirmSignUpCode, controller.confirmSignUpCode);
 

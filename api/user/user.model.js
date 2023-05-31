@@ -22,6 +22,7 @@ let UserSchema = new Schema({
     email:{
         type: String,
     },
+    cognitoIdSub: String,
     socialId: String,
     socialType: String,
     gender: String,

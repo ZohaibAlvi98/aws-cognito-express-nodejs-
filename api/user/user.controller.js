@@ -2,7 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
-var crypto = require('crypto');
+const crypto = require('crypto');
 const jwt = require('jsonwebtoken')
 
 // const UserService = require('./user.service');
@@ -31,7 +31,7 @@ function hashingPassword(password){
 exports.create = async function(req,res){
     try{
         const {email,password,username, fullname } = req.body
-        req.body.role = "user";
+        req.body["custom:role"] = "user";
         const {client} = req.app.locals
 
         const user = await UserModel.find({$or:[{email: email},{username:username}]})
@@ -45,16 +45,12 @@ exports.create = async function(req,res){
             Password: password,
             Username: username,
             ValidationData: [
-                {Name:"name",Value: fullname},
-                {Name:"email",Value: email},
-                {Name:"gender",Value: "male"},
-                {Name:"birthdate",Value: "2010-10-01"}
+                {Name:"custom:fullname",Value: fullname},
+                {Name:"email",Value: email}
             ],
             UserAttributes: [
-                {Name:"name",Value: fullname},
-                {Name:"email",Value: email},
-                {Name:"gender",Value: "male"},
-                {Name:"birthdate",Value: "2010-10-01"}
+                {Name:"custom:fullname",Value: fullname},
+                {Name:"email",Value: email}
             ],
           };
 
@@ -63,7 +59,7 @@ exports.create = async function(req,res){
                 client,
                 "SignUpCommand"
             )
-
+            req.body["cognitoIdSub"] = data.UserSub;
             await UserModel.create(req.body)
                 .then( async function (user){
                     res.send({
@@ -290,7 +286,7 @@ exports.update = async function(req,res) {
 
         let userAttributes = []
         val.map((v,i) => {
-            userAttributes.push({Name: names[i], Value: v})
+            userAttributes.push({Name: `custom:${names[i]}`, Value: v})
         })
 
         const args = {
@@ -298,7 +294,7 @@ exports.update = async function(req,res) {
             UserAttributes: userAttributes,
           };
           const data = await awsHelperfunction(
-            args,
+            args, 
             client,
             "UpdateUserAttributesCommand"
         )
@@ -314,9 +310,9 @@ exports.update = async function(req,res) {
         res.status(500).send({success: false, error: e.message})
     }
 
-    // var attributeList = [];
+    // const attributeList = [];
 
-    // var params = {
+    // const params = {
     //     UserPoolId: poolData.UserPoolId, /* required */
     //     AttributesToGet: [
     //       'email'
@@ -352,9 +348,9 @@ exports.changePassword = async function(req,res) {
         res.status(500).send({success: false, error: e.message})
     }
 
-    // var attributeList = [];
+    // const attributeList = [];
 
-    // var params = {
+    // const params = {
     //     UserPoolId: poolData.UserPoolId, /* required */
     //     AttributesToGet: [
     //       'email'
