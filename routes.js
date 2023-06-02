@@ -8,7 +8,7 @@ module.exports = function(app){
 
     app.use('/api/user', require('./api/user'));
     app.use('/api/coach', require('./api/coach'));
-    // app.use('/api/admin/aws', require('./api/admin/aws'));
+    app.use('/api/admin/aws', require('./api/admin/aws'));
 
 
     app.route('/*')

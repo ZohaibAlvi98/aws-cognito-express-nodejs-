@@ -35,7 +35,7 @@ exports.update = async function(req, res) {
             // ],
             // AllowedOAuthFlowsUserPoolClient: true || false,
           };
-
+          
           const data = await awsHelperfunction(
             args,
             client,
@@ -44,7 +44,7 @@ exports.update = async function(req, res) {
 
         res.send({
             success:true,
-            message: "Updated"
+            message: data
         })
     }catch(e){
         res.status(500).send({
@@ -136,7 +136,7 @@ exports.createAttributes = async function (req,res){
 exports.createUserPool = async function (req,res) {
   const {client} = req.app.locals
   const args = { // CreateUserPoolRequest
-    PoolName: "cubix-BOW", // required
+    PoolName: "cubix-BOW-main", // required
     Policies: { // UserPoolPolicyType
       PasswordPolicy: { // PasswordPolicyType
         MinimumLength: Number("8"),
